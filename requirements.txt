@@ -1,0 +1,6 @@
+Flask
+requests
+google-generativeai
+PyPDF2
+python-docx
+firebase_admin

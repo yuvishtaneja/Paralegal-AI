@@ -1,0 +1,430 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+body {
+    display: flex;
+    font-family: 'Inter', 'Roboto', Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #e0f7fa 0%, #f8f9fb 100%);
+}
+.sidebar {
+    width: 220px;
+    background: linear-gradient(135deg, #009688 0%, #43e97b 100%);
+    padding: 20px 10px;
+    min-height: 100vh;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.07);
+}
+#new-chat {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #a8e063 0%, #56ab2f 100%);
+    color: #fff;
+    border: 1.5px solid #e0f2f1;
+    border-radius: 12px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 8px #b2dfdb88;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s, filter 0.15s;
+}
+#new-chat:hover {
+    background: linear-gradient(90deg, #b7f8db 0%, #50c9c3 100%);
+    box-shadow: 0 4px 16px #b2dfdb88;
+    transform: scale(1.03);
+    filter: brightness(1.03);
+}
+#chat-list { margin-top: 10px; }
+.chat-item {
+    background: #e0f2f1;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background 0.2s, transform 0.1s;
+}
+.chat-item:hover {
+    background: #b2dfdb;
+    transform: scale(1.03);
+}
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
+    height: 100vh;
+    justify-content: flex-end;
+    padding-bottom: 64px;
+}
+h1 { margin-top: 40px; font-size: 2.5rem; }
+#chat-area {
+    width: 60%;
+    min-height: 300px;
+    max-height: 55vh;
+    background: rgba(255, 255, 255, 0.65);
+    margin: 40px 0;
+    border-radius: 32px;
+    box-shadow: 0 8px 32px 0 rgba(34, 139, 34, 0.18), 0 2px 8px #b2dfdb55;
+    padding: 48px 32px 32px 32px;
+    overflow-y: auto;
+    border: 2.5px solid #b2dfdb;
+    backdrop-filter: blur(12px);
+    position: relative;
+    animation: fadeIn 0.7s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+#chat-area > * {
+    position: relative;
+    z-index: 2;
+}
+.user-msg, .ai-response {
+    border-radius: 18px;
+    margin-bottom: 12px;
+    padding: 12px 18px;
+    max-width: 70%;
+    box-shadow: 0 2px 8px #e0f2f1;
+}
+.user-msg {
+    background: linear-gradient(90deg, #b2fefa 0%, #0ed2f7 100%);
+    color: #222;
+    margin-left: auto;
+    text-align: right;
+    border: 2px solid #43e97b;
+    font-weight: 500;
+    box-shadow: 0 2px 8px #b2dfdb;
+}
+.ai-response {
+    background: #e8f5e9;
+    margin-right: auto;
+    text-align: left;
+    border: 2px solid #43e97b22;
+    color: #222;
+    font-weight: 400;
+    box-shadow: 0 2px 8px #e0f2f1;
+}
+#input-form, .input-bar {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    margin-bottom: 16px;
+    z-index: 10;
+}
+#file-input { margin-right: 10px; }
+#text-input { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-right: 10px; }
+button[type="submit"] { 
+    background: #009688; 
+    color: #fff; 
+    border: none; 
+    border-radius: 8px; 
+    padding: 10px 20px; 
+    font-size: 18px; 
+    cursor: pointer; 
+}
+
+/* Input bar redesign */
+.input-bar {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    background: #fff;
+    border-radius: 2em;
+    box-shadow: 0 2px 8px #eee;
+    padding: 0.5em 1.5em;
+    margin-bottom: 2em;
+    position: relative;
+}
+.file-attach-btn {
+    cursor: pointer;
+    margin-right: 1em;
+    display: flex;
+    align-items: center;
+}
+#file-names {
+    font-size: 0.95em;
+    color: #888;
+    margin-right: 1em;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#file-input {
+    display: none;
+}
+#text-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.1em;
+    padding: 0.8em 1em;
+    border-radius: 1.5em;
+    background: transparent;
+    margin-right: 1em;
+}
+.send-btn {
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-left: 0.5em;
+}
+.send-btn:hover {
+    background: #00796b;
+    transform: scale(1.08);
+}
+
+.chat-item.active {
+    background: #b2dfdb;
+    font-weight: bold;
+    border: 2px solid #009688;
+}
+
+/* Auth (login/signup) page styles */
+body.auth-bg {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.auth-container {
+    background: #fff;
+    padding: 40px 32px 32px 32px;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    width: 350px;
+    text-align: center;
+}
+.auth-container h2 {
+    margin-bottom: 24px;
+    color: #009688;
+    font-size: 2rem;
+}
+.auth-container form input[type="email"],
+.auth-container form input[type="password"] {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #b2dfdb;
+    border-radius: 8px;
+    font-size: 1em;
+    background: #f8f9fb;
+    transition: border 0.2s;
+}
+.auth-container form input[type="email"]:focus,
+.auth-container form input[type="password"]:focus {
+    border: 1.5px solid #009688;
+    outline: none;
+}
+.auth-container button[type="submit"],
+.auth-container button {
+    width: 100%;
+    padding: 12px;
+    background: #009688;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    margin-top: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.auth-container button[type="submit"]:hover,
+.auth-container button:hover {
+    background: #00796b;
+}
+.auth-container a {
+    color: #009688;
+    text-decoration: none;
+    font-weight: bold;
+}
+.auth-container a:hover {
+    text-decoration: underline;
+}
+.auth-container p {
+    margin-top: 18px;
+    color: #555;
+    font-size: 1em;
+}
+
+/* Home page Login/Sign Up buttons (top right) */
+.btn-auth {
+    display: inline-block;
+    background: #009688;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 1.1em;
+    margin-left: 12px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    letter-spacing: 0.5px;
+}
+.btn-auth:first-child {
+    margin-left: 0;
+}
+.btn-auth:hover {
+    background: #00796b;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(0,150,136,0.10);
+    transform: translateY(-2px) scale(1.04);
+    text-decoration: none;
+}
+
+/* Profile button and dropdown styles */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.profile-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #009688 0%, #43e97b 100%);
+    color: #fff;
+    border: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #b2dfdb;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+}
+.profile-btn:hover {
+    background: #00796b;
+    transform: scale(1.07);
+}
+.profile-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 56px;
+    background: #fff;
+    min-width: 180px;
+    box-shadow: 0 4px 16px #00968833;
+    border-radius: 12px;
+    z-index: 1001;
+    padding: 10px 0;
+    text-align: left;
+    animation: fadeIn 0.2s;
+}
+.profile-menu.show {
+    display: block;
+}
+.profile-menu a, .profile-menu .profile-email {
+    display: block;
+    padding: 12px 24px;
+    color: #333;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background 0.15s;
+}
+.profile-menu .profile-email {
+    font-weight: bold;
+    color: #009688;
+    cursor: default;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 4px;
+}
+.profile-menu a:hover {
+    background: #e0f2f1;
+    color: #009688;
+}
+.profile-menu .logout-link {
+    color: #e53935;
+    font-weight: bold;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 4px;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.google-btn {
+    background: #fff;
+    color: #444;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 1.1em;
+    margin-top: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: box-shadow 0.2s;
+}
+.google-btn:hover {
+    box-shadow: 0 2px 8px #bdbdbd;
+} 
+
+/* Modal styles for Forgot Password */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 32px 24px 24px 24px;
+    border: 1px solid #b2dfdb;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 350px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+    animation: fadeIn 0.3s;
+}
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.close:hover,
+.close:focus {
+    color: #009688;
+    text-decoration: none;
+    cursor: pointer;
+}
+#reset-message {
+    margin-top: 16px;
+    color: #009688;
+    font-size: 1em;
+}
+#send-reset-email {
+    margin-top: 16px;
+} 

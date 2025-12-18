@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ParalegalAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <!-- Firebase Auth SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBehQLJXUN03Vm9AO-8kukX0gDLq7aPpEQ",
+        authDomain: "paralegal-94.firebaseapp.com",
+        projectId: "paralegal-94",
+        storageBucket: "paralegal-94.appspot.com",
+        messagingSenderId: "277097170448",
+        appId: "1:277097170448:web:31d5e7da72ca76989c2c95",
+        measurementId: "G-6VVJJ6C308"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body>
+    <div style="position: absolute; top: 20px; right: 30px; z-index: 1000;">
+        {% if not user_email %}
+            <a href="/login" class="btn-auth">Login</a>
+            <a href="/signup" class="btn-auth">Sign Up</a>
+        {% else %}
+            <div class="profile-dropdown">
+                <button class="profile-btn" id="profileBtn">{{ user_email[0]|upper }}</button>
+                <div class="profile-menu" id="profileMenu">
+                    <div class="profile-email">{{ user_email }}</div>
+                    <a href="/profile">View Profile</a>
+                    <a href="/logout" class="logout-link">Log Out</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="sidebar">
+        <button id="new-chat">+ New Chat</button>
+        <div id="chat-list">
+            {% for chat_id in chat_list %}
+                <div class="chat-item{% if chat_id == current_chat_id %} active{% endif %}" data-chat-id="{{ chat_id }}">Chat {{ chat_list|length - loop.index0 }}</div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="main">
+        <h1>ParalegalAI</h1>
+        <div id="chat-area">
+            {% for chat in chats if chat.chat_id == current_chat_id %}
+                {% for msg in chat.messages %}
+                    <div class="user-msg">{{ msg.user }}</div>
+                    <div class="ai-response">{{ msg.ai|safe }}</div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <form id="input-form" enctype="multipart/form-data" class="input-bar">
+            <label for="file-input" class="file-attach-btn">
+                <img src="https://img.icons8.com/material-outlined/24/000000/attach.png" alt="Attach" />
+            </label>
+            <input type="file" id="file-input" name="file" multiple style="display:none;">
+            <span id="file-names"></span>
+            <input type="text" id="text-input" name="prompt" placeholder="Type your message...">
+            <button type="submit" class="send-btn"><span>&#9654;</span></button>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+    // Profile dropdown toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('profileBtn');
+        var menu = document.getElementById('profileMenu');
+        if (btn && menu) {
+            btn.onclick = function(e) {
+                e.stopPropagation();
+                menu.classList.toggle('show');
+            };
+            document.body.onclick = function() {
+                menu.classList.remove('show');
+            };
+        }
+    });
+    </script>
+</body>
+</html> 
